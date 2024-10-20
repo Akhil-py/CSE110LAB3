@@ -38,8 +38,10 @@ export const StickyNotes =()=>{
        };
        const [selectedNote, setSelectedNote] = useState<Note>(initialNote);
        const handleRemoveNote =(id:number)=>{
+        console.log(notes);
         const newNotes=notes.filter(note=>note.id!==id);
         setNotes(newNotes);
+        console.log(newNotes);
        };
        interface FavoritedProp{
         isClicked:boolean;
@@ -55,7 +57,7 @@ export const StickyNotes =()=>{
       
        return (
         <ThemeContext.Provider value={currentTheme} >
-         <div className='app-container' style={{ background: currentTheme.background,color: currentTheme.foreground}}>
+         <div className='app-container' style={{ background: currentTheme.background,color: currentTheme.foreground}}   data-testid="background">
           <form className="note-form" onSubmit={createNoteHandler}>
              <div><input placeholder="Note Title" 	onChange={(event) =>setCreateNote({ ...createNote, title:event.target.value})}
                  required></input></div>
@@ -81,7 +83,7 @@ export const StickyNotes =()=>{
              {notes.map((note) => (
                <div
                  key={note.id}
-                 className="note-item" style={{ background: currentTheme.background,color: currentTheme.foreground}}>
+                 className="note-item" data-testid="note-grid" style={{ background: currentTheme.background,color: currentTheme.foreground}}>
                  <div className="notes-header">
                  <Favorited 
                       isClicked={favoritedTitles.includes(note.title)} 
@@ -89,7 +91,7 @@ export const StickyNotes =()=>{
                     />
                    <button onClick={()=>handleRemoveNote(note.id)}style={{ background: currentTheme.background,color: currentTheme.foreground}}>x</button>
                  </div>
-                 <h2 contentEditable='true'> {note.title} </h2>
+                 <h2 contentEditable='true' > {note.title} </h2>
                  <p contentEditable='true'> {note.content} </p>
                  <p contentEditable='true'> {note.label} </p>
                </div>
